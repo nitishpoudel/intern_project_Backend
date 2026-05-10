@@ -35,14 +35,37 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Property)
 class PropertyAdmin(admin.ModelAdmin):
-    list_display  = ("title", "city", "type", "status", "price", "featured", "updated_at")
-    search_fields = ("title", "city")
-    list_filter   = ("status", "type", "city", "featured")
-    ordering      = ("-updated_at",)
-    fields = (
-        "title", "city", "type", "status", "price",
-        "beds", "baths", "sqft", "featured",
-        "images", "amenities", "description",
+    list_display   = ("title", "city", "type", "status", "price", "beds", "baths", "featured", "updated_at")
+    list_editable  = ("featured",)
+    list_filter    = ("status", "type", "city", "featured")
+    search_fields  = ("title", "city", "description")
+    ordering       = ("-updated_at",)
+    readonly_fields = ("created_at", "updated_at")
+    fieldsets = (
+        ("Basic Info", {
+            "fields": ("title", "city", "type", "status", "price", "featured"),
+        }),
+        ("Specs", {
+            "fields": ("beds", "baths", "sqft"),
+        }),
+        ("Media", {
+            "description": (
+                'Enter image URLs as a JSON list. '
+                'Example: ["https://example.com/img1.jpg", "https://example.com/img2.jpg"]'
+            ),
+            "fields": ("images",),
+        }),
+        ("Amenities", {
+            "description": 'Enter amenities as a JSON list. Example: ["Pool", "Gym", "Parking"]',
+            "fields": ("amenities",),
+        }),
+        ("Description", {
+            "fields": ("description",),
+        }),
+        ("Timestamps", {
+            "fields": ("created_at", "updated_at"),
+            "classes": ("collapse",),
+        }),
     )
 
 
@@ -189,6 +212,42 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                 "contact_form_button_label",
                 "contact_form_success_msg",
                 "contact_form_error_msg",
+            ),
+        }),
+        # ── Properties Page ──────────────────────────────────────────
+        ("Properties Page – Banner", {
+            "fields": (
+                "properties_banner_eyebrow",
+                "properties_banner_heading",
+                "properties_banner_subtitle",
+                "properties_banner_bg",
+            ),
+        }),
+        ("Properties Page – Filter Bar", {
+            "fields": (
+                "properties_filter_city_placeholder",
+                "properties_filter_type_placeholder",
+                "properties_filter_status_placeholder",
+                "properties_filter_min_placeholder",
+                "properties_filter_max_placeholder",
+                "properties_filter_button_label",
+                "properties_empty_heading",
+                "properties_empty_subtext",
+            ),
+        }),
+        # ── Property Detail Page ─────────────────────────────────────
+        ("Property Detail Page – Labels", {
+            "fields": (
+                "property_detail_eyebrow",
+                "property_detail_section_heading",
+                "property_detail_amenities_heading",
+            ),
+        }),
+        ("Property Detail Page – Buy Card", {
+            "fields": (
+                "property_buy_card_heading",
+                "property_buy_card_subtext",
+                "property_buy_button_label",
             ),
         }),
     )

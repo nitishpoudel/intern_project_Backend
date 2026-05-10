@@ -306,6 +306,46 @@ class SiteSettings(models.Model):
     contact_form_success_msg   = models.CharField(max_length=255, default="Thank you! Your message has been sent. We will get back to you shortly.", help_text="Message shown after successful form submission.")
     contact_form_error_msg     = models.CharField(max_length=255, default="Something went wrong. Please try again or contact us directly.", help_text="Message shown when form submission fails.")
 
+    # ── Properties Page ───────────────────────────────────────────────
+    properties_banner_eyebrow = models.CharField(
+        max_length=100, default="Browse Listings",
+        help_text="Small label above the heading on the Properties page banner.",
+    )
+    properties_banner_heading = models.CharField(
+        max_length=150, default="Properties",
+        help_text="Main heading on the Properties page banner.",
+    )
+    properties_banner_subtitle = models.CharField(
+        max_length=255, blank=True,
+        default="Filter by city, type, status, and price range to find your perfect property.",
+        help_text="Subtitle text on the Properties page banner.",
+    )
+    properties_banner_bg = models.URLField(
+        blank=True, default="",
+        help_text="Background image URL for the Properties page banner. Leave blank to use the default dark colour.",
+    )
+    # Filter bar labels
+    properties_filter_city_placeholder    = models.CharField(max_length=60, default="All cities",  help_text="Default option text for the city filter.")
+    properties_filter_type_placeholder    = models.CharField(max_length=60, default="All types",   help_text="Default option text for the type filter.")
+    properties_filter_status_placeholder  = models.CharField(max_length=60, default="All status",  help_text="Default option text for the status filter.")
+    properties_filter_min_placeholder     = models.CharField(max_length=60, default="Min price",   help_text="Placeholder for the min price input.")
+    properties_filter_max_placeholder     = models.CharField(max_length=60, default="Max price",   help_text="Placeholder for the max price input.")
+    properties_filter_button_label        = models.CharField(max_length=60, default="Filter",      help_text="Label for the filter submit button.")
+    properties_empty_heading              = models.CharField(max_length=150, default="No properties found for the selected filters.", help_text="Heading shown when no properties match the filters.")
+    properties_empty_subtext              = models.CharField(max_length=255, blank=True, default="Try adjusting your search criteria.", help_text="Subtext shown when no properties match.")
+
+    # ── Property Detail Page ──────────────────────────────────────────
+    property_detail_eyebrow        = models.CharField(max_length=100, default="Property Details",  help_text="Small label above the property title on the detail page.")
+    property_detail_section_heading = models.CharField(max_length=100, default="Property Details", help_text="Heading for the property description card.")
+    property_detail_amenities_heading = models.CharField(max_length=100, default="Amenities",      help_text="Heading for the amenities list.")
+    property_buy_card_heading       = models.CharField(max_length=150, default="Ready to Buy?",    help_text="Heading for the Khalti buy card on the detail page.")
+    property_buy_card_subtext       = models.CharField(
+        max_length=255, blank=True,
+        default="Pay securely via Khalti. You will be redirected to Khalti's payment page.",
+        help_text="Subtext inside the buy card.",
+    )
+    property_buy_button_label       = models.CharField(max_length=100, default="Buy Now – Pay with Khalti", help_text="Label for the Buy Now button.")
+
     class Meta:
         verbose_name_plural = "Site Settings"
 
